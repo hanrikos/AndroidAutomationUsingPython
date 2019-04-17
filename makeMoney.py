@@ -25,12 +25,14 @@ class AndroidTests(unittest.TestCase):
         while n < 20:
             sleep(randint(3, 40))
             try:
+                self.driver.implicitly_wait(5)
                 element = self.driver.find_element_by_id("proxima.makemoney.android:id/button1")
                 element.click()
             except:
                 pass
             sleep(randint(3, 10))
             try:
+                self.driver.implicitly_wait(5)
                 element = self.driver.find_element_by_id("proxima.makemoney.android:id/okbutton")
                 element.click()
             except:
@@ -41,11 +43,11 @@ class AndroidTests(unittest.TestCase):
             sleep(randint(3, 10))
             element = self.driver.find_element_by_id("proxima.makemoney.android:id/okbutton")
             element.click()
-            if self.driver.find_element_by_id("android:id/button2"):
+            try:
                 sleep(randint(3, 5))
                 element = self.driver.find_element_by_id("android:id/button2")
                 element.click()
-            else:
+            except:
                 sleep(randint(30, 45))
                 self.driver.back()
 
