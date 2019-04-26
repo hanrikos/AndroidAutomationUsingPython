@@ -3,6 +3,24 @@ from appium import webdriver
 from time import sleep
 from appium.webdriver.common.touch_action import TouchAction
 from random import randint
+from subprocess import call, Popen
+import os
+import getpass
+
+class emulatorSetup():
+    def turn_on_the_emulator(self):
+        arg1 = " -avd Nexus_5X_API_28_x86 -netdelay none -netspeed full"
+        username = getpass.getuser()
+        command = "C:\\Users\\" + username + "\\AppData\\Local\\Android\\Sdk\\emulator\\emulator.exe" + arg1
+        #result = call(command)  # This will block until cmd is complete
+        p = Popen(command)
+        sleep(10)
+        print("emualtor is on")
+
+    def start_appium(self):
+        os.system("start /B start cmd.exe @cmd /k appium -a 127.0.0.1 -p 4723")
+        sleep(10)
+        print("appium is started")
 
 
 class AndroidTests(unittest.TestCase):
@@ -59,5 +77,7 @@ class AndroidTests(unittest.TestCase):
 
 
 if __name__ == '__main__':
+    emulatorSetup().turn_on_the_emulator()
+    emulatorSetup().start_appium()
     suite = unittest.TestLoader().loadTestsFromTestCase(AndroidTests)
     unittest.TextTestRunner(verbosity=2).run(suite)
